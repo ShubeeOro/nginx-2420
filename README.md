@@ -109,8 +109,10 @@ Enter the following inside ```index.html```.
 ```
 
 ### Step 5. Creating up a new server block
-We will be creating a new server block to hold all our configurations. The file.  
-We will need to create two directories: ```/etc/nginx/sites-available``` and ```/etc/nginx/sites-enabled```
+We will be creating a new server block to hold all our configurations. The server block will also be in a different file.  
+We will need to create two directories:  
+- ```/etc/nginx/sites-available```
+- ```/etc/nginx/sites-enabled```
 
 ```
 mkdir /etc/nginx/sites-available
@@ -128,7 +130,7 @@ pwd
 
 # Should return /etc/nginx/sites-available
 ```
-Now create a new .conf file called "nginx-2420.conf" to create our server block.
+Now create a new .conf file called ```nginx-2420.conf``` to create our server block in a different file.
 ```
 vim nginx-2420.conf
 ```
@@ -136,15 +138,24 @@ Enter the following inside ```nginx-2420.conf```.
 NOTE: ```listen``` can should only use ports not already in use to avoid conflicts.
 ```
 server {
-    listen 8000; # Can be any port that isn't used
+    listen 8000;
 
     server_name localhost; 
 
-    root /web/html/nginx-2420; # The path to our project
+    root /web/html/nginx-2420;
 
-    index index.html; # The default index file
+    index index.html;
 }
 ```
+- ```listen``` indicates the port the server should be listening for requests.
+
+- ```server_name``` indicates which server block is used for a given request. Routing requests to ```localhost``` in the config.
+
+- ```root``` indicates the path to the folder where content is stored for the website.
+
+- ```index``` indicates the file used as the default index inside the folder provided by ```root```.
+
+
 Change directory to ```/etc/nginx``` so we can edit the ```nginx.conf``` file.
 ```
 cd /etc/nginx
