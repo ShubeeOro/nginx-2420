@@ -198,6 +198,9 @@ Example used ```164.92.77.120```
 The following page served should be this, shown below.
 ![alt text](image.png)
 
+You can test out my demo @ ```164.92.77.120``` using your web browser  
+
+If you can see your own page, congrats you are done!!!
 
 This screenshot below shows the created droplet ```web``` I used for this assignment. IP addresss is ```164.92.77.120```
 ![alt text](image-2.png)
