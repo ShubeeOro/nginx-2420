@@ -19,7 +19,7 @@ You need the following software installed:
 nginx is responible for serving content from our server.  
 Vim is the text editor of choice to edit files. You can use something else if Vim isn't available.   
 
-Update your system.
+Update your system. Not updating your system before installing packages can cause issues.
 ```
 pacman -Syu
 ```
@@ -32,6 +32,8 @@ pacman -S nginx
 pacman -S vim
 ```
 
+
+
 ### Step 2. Start and enable nginx
 
 By default, nginx is turned off. We need to turn on the nginx via ```systemctl```
@@ -40,6 +42,9 @@ By default, nginx is turned off. We need to turn on the nginx via ```systemctl``
 systemctl start nginx
 systemctl enable nginx
 ```
+```systemctl start nginx``` gets the service to start running when the command is executed.  
+```systemctl enable nginx``` gets the service to start running when the server starts up.
+
 To check if everything is setup correctly use ```systemctl status nginx``` to see the status of nginx.
 ```
 systemctl status nginx
@@ -62,6 +67,8 @@ The dot should be green to indicate that it is running and enabled should be vis
 ### Step 3. Creating the project directory
 
 We need to create the root folder for nginx to that contains content to serve to users.  
+
+Create a new folder.
 ```
 mkdir -p /web/html/nginx-2420
 ```
@@ -108,8 +115,10 @@ Enter the following inside ```index.html```.
 </html>
 ```
 
+Save the file afterwards.
+
 ### Step 5. Creating up a new server block
-We will be creating a new server block to hold all our configurations. The server block will also be in a different file.  
+We will be creating a new file for our server block. A server block defines how nginx will process requests based on the configuration file. The server block will  be in a different file, not in the ```nginx.conf```.  
 We will need to create two directories:  
 - ```/etc/nginx/sites-available```
 - ```/etc/nginx/sites-enabled```
@@ -123,12 +132,6 @@ mkdir /etc/nginx/sites-enabled
 Change directory to the ```/etc/nginx/sites-available``` directory.  
 ```
 cd /etc/nginx/sites-available
-```
-Confirm you are in the right directory with ```pwd```. This command returns the full path of your current directory
-```
-pwd
-
-# Should return /etc/nginx/sites-available
 ```
 Now create a new .conf file called ```nginx-2420.conf``` to create our server block in a different file.
 ```
@@ -176,12 +179,19 @@ ln -s /etc/nginx/sites-available/nginx-2420.conf /etc/nginx/sites-enabled/nginx-
 ```
 The method with two directories and symbolic links makes it easy to add and remove ```.conf``` when needed.
 
+If you want you want remove the symlink link to stop nginx from using the file, use ```unlink``` in ```/sites-enabled```.
+```
+unlink /etc/nginx/sites-enabled/nginx-2420.conf
+```
+
 Restart nginx using ```systemctl``` to allow changes to take place.
 ```
 systemctl restart nginx
 ```
 
 ### Step 7. Check the websites are running.
+
+NOTE: Ensure you don't have ```https://``` in your address bar or else your browser might block the website due to website not secure. This tutorial didn't set up the server with ```https```.
 
 Using your web browser of choice, enter the IP address of your server into the address bar with the port you assigned to the ```nginx-2420.conf``` file.  
 
