@@ -134,7 +134,7 @@ Now create a new .conf file called ```nginx-2420.conf``` to create our server bl
 sudo vim nginx-2420.conf
 ```
 Enter the following inside ```nginx-2420.conf```.  
-NOTE: ```listen``` can should only use ports not already in use to avoid conflicts.
+
 ```
 server {
     listen 80;

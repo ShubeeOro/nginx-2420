@@ -63,7 +63,7 @@ We need to create the root folder for nginx to that contains content to serve to
 
 Create a new folder.
 ```
-mkdir /web/html/nginx-2420
+sudo mkdir -p /web/html/nginx-2420
 ```
 
 ### Step 4. Creating the index.html
@@ -74,7 +74,7 @@ cd /web/html/nginx-2420
 ```
 Create a new ```index.html``` file inside the current directory.
 ```
-vim index.html
+sudo vim index.html
 ```
 Enter the following inside ```index.html```.
 ```
@@ -134,7 +134,7 @@ Now create a new .conf file called ```nginx-2420.conf``` to create our server bl
 sudo vim nginx-2420.conf
 ```
 Enter the following inside ```nginx-2420.conf```.  
-NOTE: ```listen``` can should only use ports not already in use to avoid conflicts.
+
 ```
 server {
     listen 80;
