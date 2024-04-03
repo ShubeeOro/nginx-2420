@@ -141,16 +141,16 @@ Enter the following inside ```nginx-2420.conf```.
 NOTE: ```listen``` can should only use ports not already in use to avoid conflicts.
 ```
 server {
-    listen 8000;
+    listen 80;
 
-    server_name localhost; 
+    server_name 164.92.77.120;
 
     root /web/html/nginx-2420;
 
     index index.html;
 }
 ```
-- ```listen``` indicates the port the server should be listening for requests.
+- ```listen``` indicates the port the server should be listening for requests. We set it to port 80 to allow the user to connect automatically through the web browser without typing the port.
 
 - ```server_name``` indicates which server block is used for a given request. Routing requests to ```localhost``` in the config.
 
@@ -195,19 +195,12 @@ NOTE: Ensure you don't have ```https://``` in your address bar or else your brow
 
 Using your web browser of choice, enter the IP address of your server into the address bar with the port you assigned to the ```nginx-2420.conf``` file.  
 
-If you followed everything exactly, the port will be 8000. Enter ```Server IP Address:8000``` in your address bar of your web browser.  
+If you followed everything exactly, the port will be 80. Web browsers automatically use port 80 when connect to ```http``` websites. Enter ```Server IP Address``` in your address bar of your web browser.  
 
-Example used ```164.92.77.120:8000```  
+Example used ```164.92.77.120```  
 
 The following page served should be this, shown below.
 ![alt text](image.png)
-
-The default nginx page should also be available via ```Server IP Address``` without ```:8000```. 
-
-Example used ```164.92.77.120```
-![alt text](image-1.png)
-
-If you can view both sites, you have succefully created the website demo. Congrats!!!
 
 
 This screenshot below shows the created droplet ```web``` I used for this assignment. IP addresss is ```164.92.77.120```
