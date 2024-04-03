@@ -1,13 +1,6 @@
 # Assignment 3 Part 1 - ACIT 2420 - Kevin Ding
 
-Ensure you are the root user throughout the process of this tutorial. If you are not the root user by default, use the command ```su``` to switch to the root user. 
-```
-su
-
-# May prompt you for password
-```
-
-This tutorial is meant for fresh installations of Arch Linux with root permissions. Ensure you have the IP address to your server for testing purposes.
+This tutorial is meant for fresh installations of Arch Linux as a regular user. Ensure you have the IP address to your server for testing purposes.
 
 ### Step 1: Install Necessary Software
 
@@ -21,15 +14,15 @@ Vim is the text editor of choice to edit files. You can use something else if Vi
 
 Update your system. Not updating your system before installing packages can cause issues.
 ```
-pacman -Syu
+sudo pacman -Syu
 ```
 
 Install nginx and Vim
 ```
-pacman -S nginx
+sudo pacman -S nginx
 ```
 ```
-pacman -S vim
+sudo pacman -S vim
 ```
 
 
@@ -39,15 +32,15 @@ pacman -S vim
 By default, nginx is turned off. We need to turn on the nginx via ```systemctl```
 
 ```
-systemctl start nginx
-systemctl enable nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
 ```
 ```systemctl start nginx``` gets the service to start running when the command is executed.  
 ```systemctl enable nginx``` gets the service to start running when the server starts up.
 
 To check if everything is setup correctly use ```systemctl status nginx``` to see the status of nginx.
 ```
-systemctl status nginx
+sudo systemctl status nginx
 ```
 ```
 ● nginx.service - A high performance web server and a reverse proxy server
@@ -70,7 +63,7 @@ We need to create the root folder for nginx to that contains content to serve to
 
 Create a new folder.
 ```
-mkdir -p /web/html/nginx-2420
+mkdir /web/html/nginx-2420
 ```
 
 ### Step 4. Creating the index.html
@@ -119,13 +112,16 @@ Save the file afterwards.
 
 ### Step 5. Creating up a new server block
 We will be creating a new file for our server block. A server block defines how nginx will process requests based on the configuration file. The server block will  be in a different file, not in the ```nginx.conf```.  
+
+NOTE: Creating directories and folders here requires sudo because ```/etc/nginx``` is owned by ```root```.
+
 We will need to create two directories:  
 - ```/etc/nginx/sites-available```
 - ```/etc/nginx/sites-enabled```
 
 ```
-mkdir /etc/nginx/sites-available
-mkdir /etc/nginx/sites-enabled
+sudo mkdir /etc/nginx/sites-available
+sudo mkdir /etc/nginx/sites-enabled
 ```
 ```/etc/nginx/sites-available``` is where we will store seperate server blocks in different files and ```/etc/nginx/sites-enabled``` is where ```nginx.conf``` will look for those server blocks.  
 
@@ -135,7 +131,7 @@ cd /etc/nginx/sites-available
 ```
 Now create a new .conf file called ```nginx-2420.conf``` to create our server block in a different file.
 ```
-vim nginx-2420.conf
+sudo vim nginx-2420.conf
 ```
 Enter the following inside ```nginx-2420.conf```.  
 NOTE: ```listen``` can should only use ports not already in use to avoid conflicts.
@@ -162,7 +158,7 @@ server {
 Change directory to ```/etc/nginx``` so we can edit the ```nginx.conf``` file.
 ```
 cd /etc/nginx
-vim nginx.conf
+sudo vim nginx.conf
 ```
 Inside the ```nginx.conf``` file, add the following to the end of ```http``` block.
 ```
@@ -175,18 +171,18 @@ This will enable nginx to see seperate server blocks inside the ```/sites-enable
 
 To enable the site now, simply create a symlink of the ```nginx-2420.conf``` file to ```/sites-enabled```.
 ```
-ln -s /etc/nginx/sites-available/nginx-2420.conf /etc/nginx/sites-enabled/nginx-2420.conf
+sudo ln -s /etc/nginx/sites-available/nginx-2420.conf /etc/nginx/sites-enabled/nginx-2420.conf
 ```
 The method with two directories and symbolic links makes it easy to add and remove ```.conf``` when needed.
 
 If you want you want remove the symlink link to stop nginx from using the file, use ```unlink``` in ```/sites-enabled```.
 ```
-unlink /etc/nginx/sites-enabled/nginx-2420.conf
+sudo unlink /etc/nginx/sites-enabled/nginx-2420.conf
 ```
 
 Restart nginx using ```systemctl``` to allow changes to take place.
 ```
-systemctl restart nginx
+sudo systemctl restart nginx
 ```
 
 ### Step 7. Check the websites are running.
