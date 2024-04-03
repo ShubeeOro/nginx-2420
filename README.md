@@ -148,7 +148,7 @@ server {
 ```
 - ```listen``` indicates the port the server should be listening for requests. We set it to port 80 to allow the user to connect automatically through the web browser without typing the port.
 
-- ```server_name``` indicates which server block is used for a given request. We use the Server IP Address because that is how users connect to the website at the moment.
+- ```server_name``` indicates which server block is used for a given request. We use the Server IP Address because that is how users connect to the website at the moment. Ensure you use **your Server IP Address**.
 
 - ```root``` indicates the path to the folder where content is stored for the website.
 
