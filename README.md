@@ -196,7 +196,7 @@ If you followed everything exactly, the port will be 80. Web browsers automatica
 Example used ```164.92.77.120```  
 
 The following page served should be this, shown below.
-![alt text](image.png)
+![alt text](image-3.png)
 
 You can test out my demo @ ```164.92.77.120``` using your web browser  
 
