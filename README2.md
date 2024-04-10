@@ -137,7 +137,7 @@ cd ~
 sudo mv hello-server /usr/lib/hello-server/hello-server
 ```
 
-Ensure that the file has execute permissions with ```chmod```. We only need execute perms for the user which is ```root``` in this case.
+Ensure that the file has execute permissions with ```chmod```. We only need execute perms for the user which is ```root```.
 
 ```
 sudo chmod u+x /usr/lib/hello-server/hello-server
@@ -168,7 +168,7 @@ WantedBy=multi-user.target
 
 - ```After``` means that this service starts running after ```ufw.service``` and ```nginx.service``` is up and running fully. Without this, all services will start running at the same time.  
 - ```Requires``` indicates what are this service dependencies. This service will not start without ```ufw.service``` or ```nginx.service```
-- ```Type``` indicates what type of service we are running. We are not running a type ```oneshot``` or ```notify```. No ```type``` needs to be inside the unit file because default is default is ```simple```.
+- ```Type``` indicates what type of service we are running. We are not running a type ```oneshot``` or ```notify```. No ```type``` needs to be inside the unit file because default is ```simple```.
 - ```ExecStart``` tells the service what file to execture on start. This will be our backend file.
 - ```WantedBy``` allows us to enable the service, telling it to create/remove a symbolic link in ```/etc/systemd/system/multi-user.target.wants``` which is where the system will look in to find services to start on boot. It create/remove a symbolic link when we enable or disable this service.
 
@@ -214,6 +214,11 @@ server {
 
     location /hey {
         proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 
     location /echo {
@@ -230,8 +235,8 @@ Remember the server_name will be the IP of your server.
 
 - ```proxy_pass``` indicates the address of a proxied server. In this case, it is ```127.0.0.1:8080```.
 - ```proxy_set_header``` allows us to pass headers from the original request to the proxy server.  
-In ```/echo```, we want it to be able to accept ```POST``` in order to work and forward headers to the proxy server from the original request..  
- ```/hey``` doesn't need it because we are only doing ```GET``` requests.
+We want it to be able to forward headers to the proxy server from the original request.  
+
 
 
 We set up a symbolic link already in Part 1 so we only need to restart ```nginx``` to allow changes to take effect.   
